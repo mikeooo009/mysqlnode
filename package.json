@@ -1,0 +1,24 @@
+{
+  "name": "mysqlnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "jest": "^29.7.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.5",
+    "redis": "^4.7.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "ws": "^8.18.0"
+  }
+}

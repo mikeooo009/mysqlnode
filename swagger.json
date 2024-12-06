@@ -1,0 +1,134 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Car Bidding System API",
+      "description": "API documentation for the car bidding system, including WebSocket actions and REST endpoints."
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "paths": {
+      "/placeBid": {
+        "post": {
+          "summary": "Place a bid (Rate Limited)",
+          "description": "REST endpoint for placing a bid. This is rate-limited to prevent spam.",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/PlaceBidPayload"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Bid placed successfully",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Bid placed successfully"
+                  }
+                }
+              }
+            },
+            "429": {
+              "description": "Too many requests",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Rate limit exceeded. Try again later."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/websocket": {
+        "get": {
+          "summary": "WebSocket Endpoint",
+          "description": "Documentation for WebSocket actions supported by the server.",
+          "responses": {
+            "101": {
+              "description": "Switching Protocols",
+              "examples": {
+                "application/json": {
+                  "message": "Connected to WebSocket server on ws://localhost:8080"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "PlaceBidPayload": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "example": 1
+          },
+          "auctionId": {
+            "type": "integer",
+            "example": 101
+          },
+          "bidAmount": {
+            "type": "number",
+            "example": 100.0
+          }
+        }
+      }
+    },
+    "x-websocket-documentation": {
+      "url": "ws://localhost:8080",
+      "actions": {
+        "joinAuction": {
+          "description": "Join an auction room to start receiving updates.",
+          "payload": {
+            "action": "joinAuction",
+            "payload": {
+              "auctionId": 101
+            }
+          },
+          "response": {
+            "message": "Joined auction 101"
+          }
+        },
+        "placeBid": {
+          "description": "Place a bid in real-time using WebSocket.",
+          "payload": {
+            "action": "placeBid",
+            "payload": {
+              "userId": 1,
+              "auctionId": 101,
+              "bidAmount": 120.0
+            }
+          },
+          "response": {
+            "message": "New bid: 120.0"
+          }
+        },
+        "auctionEnd": {
+          "description": "End an auction and notify all participants.",
+          "payload": {
+            "action": "auctionEnd",
+            "payload": {
+              "auctionId": 101
+            }
+          },
+          "response": {
+            "message": "Auction ended. Winning bid: 120.0"
+          }
+        }
+      }
+    }
+  }
+  
