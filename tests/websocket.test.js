@@ -35,7 +35,7 @@ describe('WebSocket Server Tests', () => {
                 payload: { userId: 1, auctionId: 1, bidAmount: 100 }
             })
         );
-    
+
         ws.on('message', (message) => {
             console.log('Received message:', message);
             const data = JSON.parse(message);
@@ -43,6 +43,6 @@ describe('WebSocket Server Tests', () => {
             done();
         });
     }, 20000);
-    
+
 
 });
