@@ -333,6 +333,12 @@ app.get('/bids', async (req, res) => {
 });
 
 
+// Fetch all bids and related car information
+app.get('/', async (req, res) => {
+    res.send("Hello");
+});
+
+
 app.use(express.urlencoded({ extended: true }));
 
 
